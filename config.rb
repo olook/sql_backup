@@ -6,7 +6,7 @@
 
 require 'backup'
 
-Backup::Model.new(:sql_backup, 'Standard backup configuration file for MySQL') do
+Backup::Model.new(:sql_backup, 'olook_production database on db2') do
   split_into_chunks_of 4000
 
   database MySQL do |database|
