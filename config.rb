@@ -26,7 +26,7 @@ Backup::Model.new(:sql_backup, 'Standard backup configuration file for MySQL') d
     s3.access_key_id = 'AKIAJ2WH3XLYA24UTAJQ'
     s3.secret_access_key = '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'
     s3.bucket = 'olook_sql_backups'
-    s3.path = '/mnt/backups/db'
+    s3.path = '/'
     s3.keep = 20
   end
 
