@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-#!/usr/local/ruby/bin/ruby
 #
 # MySQL Backup configuration
 # AUTHOR: zanst <stephano.zanzin@codeminer42.com>
