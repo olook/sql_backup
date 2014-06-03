@@ -1,49 +1,123 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
+
+##
+# Backup v4.x Configuration
 #
-# MySQL Backup configuration
-# AUTHOR: zanst <stephano.zanzin@codeminer42.com>
+# Documentation: http://meskyanichi.github.io/backup
+# Issue Tracker: https://github.com/meskyanichi/backup/issues
+
+##
+# Config Options
 #
+# The options here may be overridden on the command line, but the result
+# will depend on the use of --root-path on the command line.
+#
+# If --root-path is used on the command line, then all paths set here
+# will be overridden. If a path (like --tmp-path) is not given along with
+# --root-path, that path will use it's default location _relative to --root-path_.
+#
+# If --root-path is not used on the command line, a path option (like --tmp-path)
+# given on the command line will override the tmp_path set here, but all other
+# paths set here will be used.
+#
+# Note that relative paths given on the command line without --root-path
+# are relative to the current directory. The root_path set here only applies
+# to relative paths set here.
+#
+# ---
+#
+# Sets the root path for all relative paths, including default paths.
+# May be an absolute path, or relative to the current working directory.
+#
+# root_path 'my/root'
+#
+# Sets the path where backups are processed until they're stored.
+# This must have enough free space to hold apx. 2 backups.
+# May be an absolute path, or relative to the current directory or +root_path+.
+#
+# tmp_path  'my/tmp'
+#
+# Sets the path where backup stores persistent information.
+# When Backup's Cycler is used, small YAML files are stored here.
+# May be an absolute path, or relative to the current directory or +root_path+.
+#
+# data_path 'my/data'
 
-require 'backup'
+##
+# Utilities
+#
+# If you need to use a utility other than the one Backup detects,
+# or a utility can not be found in your $PATH.
+#
+#   Utilities.configure do
+#     tar       '/usr/bin/gnutar'
+#     redis_cli '/opt/redis/redis-cli'
+#   end
 
-Backup::Model.new(:sql_backup, 'olook_production database on db2') do
-  split_into_chunks_of 4000
+##
+# Logging
+#
+# Logging options may be set on the command line, but certain settings
+# may only be configured here.
+#
+#   Logger.configure do
+#     console.quiet     = true            # Same as command line: --quiet
+#     logfile.max_bytes = 2_000_000       # Default: 500_000
+#     syslog.enabled    = true            # Same as command line: --syslog
+#     syslog.ident      = 'my_app_backup' # Default: 'backup'
+#   end
+#
+# Command line options will override those set here.
+# For example, the following would override the example settings above
+# to disable syslog and enable console output.
+#   backup perform --trigger my_backup --no-syslog --no-quiet
 
-  database MySQL do |database|
-    database.name = 'olook_production'
-    database.username = 'root'
-    database.password = '1zPp8xk'
-    database.skip_tables = ['sessions']
-    database.additional_options = ['--single-transaction --quick'] 
-  end
+##
+# Component Defaults
+#
+# Set default options to be applied to components in all models.
+# Options set within a model will override those set here.
+#
+#   Storage::S3.defaults do |s3|
+#     s3.access_key_id     = "my_access_key_id"
+#     s3.secret_access_key = "my_secret_access_key"
+#   end
+#
+#   Notifier::Mail.defaults do |mail|
+#     mail.from                 = 'sender@email.com'
+#     mail.to                   = 'receiver@email.com'
+#     mail.address              = 'smtp.gmail.com'
+#     mail.port                 = 587
+#     mail.domain               = 'your.host.name'
+#     mail.user_name            = 'sender@email.com'
+#     mail.password             = 'my_password'
+#     mail.authentication       = 'plain'
+#     mail.encryption           = :starttls
+#   end
 
-  compress_with Bzip2 do |compression|
-    compression.best = true
-    compression.fast = false
-  end
-
-  store_with S3 do |s3|
-    s3.access_key_id = 'AKIAJ2WH3XLYA24UTAJQ'
-    s3.secret_access_key = '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'
-    s3.bucket = 'olook_sql_backups'
-    s3.path = '/'
-    s3.keep = 20
-  end
-
-  notify_by Mail do |mail|
-    mail.on_success = true
-    mail.on_warning = true
-    mail.on_failure = true
-
-    mail.from = 'convite@olook.com.br'
-    mail.to = 'felipe.mattosinho@olook.com.br', 'stephano.zanzin@codeminer42.com', 'hugo.borges@codeminer42.com', 'rinaldi.fonseca@codeminer42.com'
-    mail.address = 'smtp.gmail.com'
-    mail.port = 587
-    mail.domain = 'olook.com.br'
-    mail.user_name = 'convite@olook.com.br'
-    mail.password = 'olook123abc'
-    mail.authentication = 'plain'
-    mail.enable_starttls_auto = true
-  end
-end
-
+##
+# Preconfigured Models
+#
+# Create custom models with preconfigured components.
+# Components added within the model definition will
+# +add to+ the preconfigured components.
+#
+#   preconfigure 'MyModel' do
+#     archive :user_pictures do |archive|
+#       archive.add '~/pictures'
+#     end
+#
+#     notify_by Mail do |mail|
+#       mail.to = 'admin@email.com'
+#     end
+#   end
+#
+#   MyModel.new(:john_smith, 'John Smith Backup') do
+#     archive :user_music do |archive|
+#       archive.add '~/music'
+#     end
+#
+#     notify_by Mail do |mail|
+#       mail.to = 'john.smith@email.com'
+#     end
+#   end
