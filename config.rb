@@ -29,19 +29,19 @@
 # Sets the root path for all relative paths, including default paths.
 # May be an absolute path, or relative to the current working directory.
 #
-# root_path 'my/root'
+root_path '/mnt'
 #
 # Sets the path where backups are processed until they're stored.
 # This must have enough free space to hold apx. 2 backups.
 # May be an absolute path, or relative to the current directory or +root_path+.
 #
-# tmp_path  'my/tmp'
+tmp_path  'tmp'
 #
 # Sets the path where backup stores persistent information.
 # When Backup's Cycler is used, small YAML files are stored here.
 # May be an absolute path, or relative to the current directory or +root_path+.
 #
-# data_path 'my/data'
+data_path 'data'
 
 ##
 # Utilities
