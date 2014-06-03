@@ -20,7 +20,7 @@ Model.new(:sql_backup, 'Backup da base de aplicação') do
     db.username           = "olook"
     db.password           = "1zPp8xk"
     db.host               = "olookdb1.ct2t45qjbvrd.us-east-1.rds.amazonaws.com"
-    db.port               = 3300
+    db.port               = 3306
     # db.socket             = "/tmp/mysql.sock"
     # Note: when using `skip_tables` with the `db.name = :all` option,
     # table names should be prefixed with a database name.
