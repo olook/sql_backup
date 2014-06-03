@@ -25,7 +25,7 @@ Model.new(:sql_backup, 'Backup da base de aplicação') do
     # Note: when using `skip_tables` with the `db.name = :all` option,
     # table names should be prefixed with a database name.
     # e.g. ["db_name.table_to_skip", ...]
-    db.skip_tables        = ['sessions']
+    db.skip_tables        = ['sessions', 'carts_backup']
     #db.only_tables        = []
     db.additional_options = ["--quick", "--single-transaction", "--compact", "--compress"]
   end
