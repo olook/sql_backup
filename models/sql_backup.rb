@@ -46,6 +46,8 @@ Model.new(:sql_backup, 'Backup da base de aplicação') do
     s3.keep 		 = 20
   end
 
+  compress_with Bzip2
+
   ##
   # Mail [Notifier]
   #
