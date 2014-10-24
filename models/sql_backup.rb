@@ -19,7 +19,7 @@ Model.new(:sql_backup, 'Backup da base de aplicação') do
     db.name               = "olook_production"
     db.username           = "olook"
     db.password           = "1zPp8xk"
-    db.host               = "olookdb1.ct2t45qjbvrd.us-east-1.rds.amazonaws.com"
+    db.host               = "olook-app-db-sp.c1xvmbfkxaap.sa-east-1.rds.amazonaws.com"
     db.port               = 3306
     # db.socket             = "/tmp/mysql.sock"
     # Note: when using `skip_tables` with the `db.name = :all` option,
@@ -60,7 +60,7 @@ Model.new(:sql_backup, 'Backup da base de aplicação') do
     mail.on_failure           = true
 
     mail.from                 = "convite@olook.com.br"
-    mail.to                   = "nelson.haraguchi@olook.com.br", "tiago.almeida@olook.com.br", "rafael.manoel@olook.com.br"
+    mail.to                   = "luis.daher@olook.com.br", "lucas.santana@olook.com.br"
     mail.address              = "smtp.gmail.com"
     mail.port                 = 587
     mail.domain               = "olook.com.br"
